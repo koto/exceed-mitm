@@ -278,12 +278,12 @@ Details
 -------
 EoD connection handshaking relies on three TCP connections. First connection authenticates the user in Cluster Manager (this is SSL encrypted). Second connection (also SSL encrypted) provides the client with session id - 20 bytes alphanumeric identificator. Third TCP connection is with EoD Proxy. This connection is by default unencrypted as mentioned in Exceed Connection Server Administrator’s Guide (v13.8) - http://connectivity.opentext.com/hostedmedia/Documentation/EoD_8/Manuals/ExceedConnectionServer.pdf, page 64 (About SSL features):
 
-  The option to enable SSL encryption for proxy
-  connections is not enabled by default. If you want to secure all
-  session communications (not just server log in), see “Configuring
-  Cluster Settings” on page 18.
+>  The option to enable SSL encryption for proxy
+>  connections is not enabled by default. If you want to secure all
+>  session communications (not just server log in), see “Configuring
+>  Cluster Settings” on page 18.
 
-However, even if the connection switches to SSL negotiation, session identifier is sent in plaintext before the SSL handshake begins. Therefore it is possible to read the authenticated session identifier even without decrypting SSL traffic.
+However, even if the connection switches to SSL negotiation, session identifier is sent in cleartext before the SSL handshake begins. Therefore it is possible to read the authenticated session identifier even without decrypting SSL traffic.
 
 Example: Beginning of the proxy server traffic:
 
@@ -292,11 +292,11 @@ Example: Beginning of the proxy server traffic:
     00000004  4c 41 39 30 34 46 36 43  31 35 45 30 35 32 38 44 LA904F6C 15E0528D
     00000014  45 36 32 43                                      E62C
 
-`LA904F6C15E0528DE62C` is the session id sent in clear text.
+`LA904F6C15E0528DE62C` is the session id sent in cleartext.
 
 Using this session identifier the atttacker can connect to EoD proxy server directly, skipping the authentication part.
 
-Our investigation shows that the session hijack has to occur during a short time-window. Within a few seconds from obtaining the session id, original user must be disconnected (e.g. by changing his session id in-traffic to a dummy one) and his session id must be used by the attacker. We were able to prepare a proof-of-concept where two simultaneous connections were made with EoD server with separate EoD clients, their session identifiers were read from the clear text traffic and switched. As a result, users got each other's sessions. 
+Our investigation shows that the session hijack has to occur during a short time-window. Within a few seconds from obtaining the session id, original user must be disconnected (e.g. by changing his session id in-traffic to a dummy one) and his session id must be used by the attacker. We were able to prepare a proof-of-concept where two simultaneous connections were made with EoD server with separate EoD clients, their session identifiers were read from the cleartext traffic and switched. As a result, users got each other's sessions. 
 
 Access conditions
 -----------------
