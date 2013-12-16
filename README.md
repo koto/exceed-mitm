@@ -225,7 +225,7 @@ Application uses trivial password obfuscation mechanism in various places
 
 Details
 -------
-Authentication message (in various versions of the protocol being transferred in-the-clear or in SSL connection) contains an obfuscated password, which can be trivially decoded by the attacker observing the transmission. The same password obfuscation mechanism is being used when storing connection parameters in eod8 files, allowing the attacker who gets access to eod8 files to retrieve the original passwords.
+Authentication message (in various versions of the protocol being transferred in-the-clear or in SSL connection) contains an obfuscated password, which can be trivially decoded by the attacker observing the transmission. The same password obfuscation mechanism is being used when storing connection parameters in `.eod8` files, allowing the attacker who gets access to `.eod8` files to retrieve the original passwords.
 
 The algorithm used is:
 
@@ -242,7 +242,7 @@ To retrieve the original password, the algorithm need to be reversed, e.g.:
 
 Access conditions
 -----------------
-Man in the middle / Access to eod8 files
+Man in the middle / Access to `.eod8` files
 
 Impact
 ------
@@ -258,7 +258,7 @@ Connecting client through this proxy will deobfuscate all credentials being sent
 
 Advisory
 --------
-In authentication protocol, consider establishing a challenge-response handshake to disallow revealing the password during man-in-the middle attacks and protect from replay attacks, where the attacker replies the authentication message without knowing the password. This can also be mitigated by using proper SSL ciphers and enforcing SSL communication. Passwords should not be stored in trivially reversible form in eod8 files, consider storing encrypted passwords with an installation-unique or user-provided key instead.
+In authentication protocol, consider establishing a challenge-response handshake to disallow revealing the password during man-in-the middle attacks and protect from replay attacks, where the attacker replies the authentication message without knowing the password. This can also be mitigated by using proper SSL ciphers and enforcing SSL communication. Passwords should not be stored in trivially reversible form in `.eod8` files, consider storing encrypted passwords with an installation-unique or user-provided key instead.
 
 More info:
 ----------
