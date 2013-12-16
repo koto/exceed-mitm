@@ -31,7 +31,7 @@ If communication between EoD Client and Cluster Manager can be intercepted and t
 
 Details
 -------
-Upon connecting to Cluster Manager (TCP port 5500), EoD Client sends 4 bytes: `\x01\x01\x00\x00`, in turn CM responds with 4 bytes, negotiating the version of the protocol to use. Respond from current CM version is : `\x0b\x00\x00\x00`. Such a reponse triggers SSL handshake (similar to STARTSSL mechanism), credentials are then sent in encrypted SSLv3 connection:
+Upon connecting to Cluster Manager (TCP port 5500), EoD Client sends 4 bytes: `\x01\x01\x00\x00`, in turn CM responds with 4 bytes, negotiating the version of the protocol to use. Response from current CM version is : `\x0b\x00\x00\x00`. This triggers SSL handshake (similar to STARTSSL mechanism), credentials are then sent in encrypted SSLv3 connection:
 
 Wireshark dump of the beginning of connection:
 
